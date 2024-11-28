@@ -78,10 +78,12 @@ export default function MOSMOPSinglePage() {
 
   useEffect(() => {
     import('leaflet').then(L => {
-      if (L.Icon.Default.prototype._getIconUrl) {
-        delete L.Icon.Default.prototype._getIconUrl;
+      const DefaultIcon = L.Icon.Default;
+      const prototype = DefaultIcon.prototype as any;
+      if (prototype._getIconUrl) {
+        delete prototype._getIconUrl;
       }
-      L.Icon.Default.mergeOptions({
+      DefaultIcon.mergeOptions({
         iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/images/marker-icon-2x.png',
         iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/images/marker-icon.png',
         shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/images/marker-shadow.png',
