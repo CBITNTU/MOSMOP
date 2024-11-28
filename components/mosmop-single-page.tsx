@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState, RefObject } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { ArrowRight, Globe, Slack, Book } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -91,8 +91,10 @@ export default function MOSMOPSinglePage() {
     });
   }, []);
 
-  const scrollTo = (ref) => {
-    ref.current.scrollIntoView({ behavior: 'smooth' })
+  const scrollTo = (ref: RefObject<HTMLElement>) => {
+    if (ref.current) {
+      ref.current.scrollIntoView({ behavior: 'smooth' })
+    }
   }
 
   const handleSlackFormSubmit = async (event) => {
