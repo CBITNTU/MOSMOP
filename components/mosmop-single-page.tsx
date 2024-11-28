@@ -35,6 +35,7 @@ const collaborators = [
   { name: "Prof. Xiao Ma", role: "PI", institution: "Centre for Business and Industrial Transformation", image: "/images/collaborators/xiaoma.png" },
   { name: "Prof. Li Wei", role: "Co-PI", institution: "Shanghai Jiao Tong University", image: "/images/collaborators/li-wei.jpg" },
   { name: "Dr. Fatima Gillani", role: "Senior Research Fellow", institution: "Centre for Business and Industrial Transformation", image: "/images/collaborators/fatima.jpg" },
+  { name: "Dr. Sönnich Dahl Sönnichsen", role: "Associate Professor", institution: "Centre for Business and Industrial Transformation", image: "/images/collaborators/sonnich.jpg" },
 ]
 
 const collaboratorLogos = [
@@ -237,7 +238,7 @@ export default function MOSMOPSinglePage() {
         <section id="collaborators" ref={collaboratorsRef} className="py-16 bg-green-50">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl font-bold text-center mb-8">Our Collaborators</h2>
-            <div className="grid md:grid-cols-3 gap-8 mb-12">
+            <div className="grid md:grid-cols-4 gap-8 mb-12">
               {collaborators.map((collaborator, index) => <Card key={index}>
                   <CardContent className="flex flex-col items-center pt-6">
                     <img
