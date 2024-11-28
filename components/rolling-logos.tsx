@@ -1,39 +1,26 @@
-"use client"
-
 import React from 'react'
-import { motion } from 'framer-motion'
+import Image from 'next/image'
 
 interface RollingLogosProps {
   logos: string[]
 }
 
-export function RollingLogos({ logos }: RollingLogosProps) {
+export const RollingLogos: React.FC<RollingLogosProps> = ({ logos }) => {
   return (
-    <div className="w-full overflow-hidden py-12">
-      <motion.div
-        className="flex space-x-8"
-        animate={{
-          x: [0, -100 * logos.length],
-        }}
-        transition={{
-          x: {
-            repeat: Infinity,
-            repeatType: "loop",
-            duration: 20,
-            ease: "linear",
-          },
-        }}
-      >
+    <div className="w-full overflow-hidden bg-white py-4">
+      <div className="flex animate-scroll">
         {logos.concat(logos).map((logo, index) => (
-          <div key={index} className="flex-none w-32 h-32">
-            <img
+          <div key={index} className="flex-shrink-0 w-48 mx-4">
+            <Image
               src={logo}
               alt={`Collaborator logo ${index + 1}`}
-              className="w-full h-full object-contain"
+              width={192}
+              height={96}
+              className="object-contain"
             />
           </div>
         ))}
-      </motion.div>
+      </div>
     </div>
   )
 }
