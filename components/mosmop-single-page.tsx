@@ -13,6 +13,9 @@ import { Input } from '@/components/ui/input'
 import { Label } from "@/components/ui/label"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { RollingLogos } from '@/components/rolling-logos'
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+import 'leaflet/dist/leaflet.css'
+import dynamic from 'next/dynamic'
 
 import type { LatLngExpression } from 'leaflet';
 declare global {
@@ -101,6 +104,24 @@ export default function MOSMOPSinglePage() {
     }
   }, [])
 
+  const DynamicMap = dynamic(() => import('../components/DynamicMap'), {
+  ssr: false,
+})
+
+export default function MOSMOPSinglePage() {
+  useEffect(() => {
+    import('leaflet').then(L => {
+      delete L.Icon.Default.prototype._getIconUrl;
+      L.Icon.Default.mergeOptions({
+        iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/images/marker-icon-2x.png',
+        iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/images/marker-icon.png',
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/images/marker-shadow.png',
+      });
+    });
+  }, []);
+
+  const mapRef = React.useRef(null);
+  
   const scrollTo = (ref) => {
     ref.current.scrollIntoView({ behavior: 'smooth' })
   }
@@ -306,17 +327,7 @@ export default function MOSMOPSinglePage() {
           <div className="container mx-auto px-4">
             <h2 className="text-3xl font-bold text-center mb-8">Global Impact</h2>
             <div className="h-[600px] w-full">
-              <MapContainer center={[52.5, -1.5]} zoom={6} style={{ height: '100%', width: '100%' }}>
-                <TileLayer
-                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                />
-                {markers.map((marker, index) => (
-                  <Marker key={index} position={marker.coordinates}>
-                    <Popup>{marker.name}</Popup>
-                  </Marker>
-                ))}
-              </MapContainer>
+              <DynamicMap />
             </div>
           </div>
         </section>
