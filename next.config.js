@@ -1,16 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  images: {
+    domains: ['cdnjs.cloudflare.com'],
+  },
   webpack: (config) => {
-    config.module.rules.push({
-      test: /\.js$/,
-      use: ['babel-loader'],
-      include: [
-        /node_modules\/leaflet/,
-        /node_modules\/react-leaflet/,
-      ],
-    })
-    return config
+    config.externals = [...(config.externals || []), { canvas: 'canvas' }];
+    return config;
   },
 }
 
