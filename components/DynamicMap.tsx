@@ -1,7 +1,8 @@
 import React from 'react'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+import { LatLngExpression } from 'leaflet'
 
-const markers = [
+const markers: { name: string; coordinates: LatLngExpression }[] = [
   { name: "University of Nottingham", coordinates: [52.9388, -1.1968] },
   { name: "University of Exeter", coordinates: [50.7365, -3.5339] },
   { name: "University of Sheffield", coordinates: [53.3811, -1.4882] },
