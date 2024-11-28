@@ -1,12 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  swcMinify: true,
   images: {
-    domains: ['cdnjs.cloudflare.com'],
-  },
-  webpack: (config) => {
-    config.externals = [...(config.externals || []), { canvas: 'canvas' }];
-    return config;
+    domains: ['cdnjs.cloudflare.com'], // Add any other domains you're loading images from
   },
 }
 
