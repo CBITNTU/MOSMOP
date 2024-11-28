@@ -4,26 +4,16 @@ import { ArrowRight, Globe, Slack, Book } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import Link from 'next/link'
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
-import 'leaflet/dist/leaflet.css'
 import { Input } from '@/components/ui/input'
 import { Label } from "@/components/ui/label"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { RollingLogos } from '@/components/rolling-logos'
 import dynamic from 'next/dynamic'
+import Image from 'next/image'
 
 const DynamicMap = dynamic(() => import('../components/DynamicMap'), {
   ssr: false,
 })
-
-const markers = [
-  { name: "University of Nottingham", coordinates: [52.9388, -1.1968] },
-  { name: "University of Exeter", coordinates: [50.7365, -3.5339] },
-  { name: "University of Sheffield", coordinates: [53.3811, -1.4882] },
-  { name: "University of Lincoln", coordinates: [53.2285, -0.5501] },
-  { name: "Royal Holloway, University of London", coordinates: [51.4255, -0.5671] },
-  { name: "Nottingham Trent University", coordinates: [52.9581, -1.1542] },
-]
 
 const collaborators = [
   { name: "Prof. Xiao Ma", role: "Professor", institution: "Centre for Business and Industrial Transformation", image: "/images/collaborators/xiaoma.png" },
@@ -88,8 +78,9 @@ export default function MOSMOPSinglePage() {
 
   useEffect(() => {
     import('leaflet').then(L => {
-      // @ts-ignore
-      delete L.Icon.Default.prototype._getIconUrl;
+      if (L.Icon.Default.prototype._getIconUrl) {
+        delete L.Icon.Default.prototype._getIconUrl;
+      }
       L.Icon.Default.mergeOptions({
         iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/images/marker-icon-2x.png',
         iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/images/marker-icon.png',
@@ -147,10 +138,11 @@ export default function MOSMOPSinglePage() {
         {/* Hero Section */}
         <section id="hero" ref={heroRef} className="relative h-[calc(100vh-5rem)] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0 z-0">
-            <img
+            <Image
               src="/images/hero-image.jpg"
               alt="Sustainable business landscape"
-              className="w-full h-full object-cover"
+              layout="fill"
+              objectFit="cover"
             />
             <div className="absolute inset-0 bg-black/40" />
           </div>
@@ -231,9 +223,11 @@ export default function MOSMOPSinglePage() {
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               {[1, 2, 3, 4, 5, 6].map((i) => (
                 <div key={i} className="relative group overflow-hidden rounded-lg">
-                  <img
+                  <Image
                     src={`/images/workshops/workshop-${i}.jpg`}
                     alt={`Workshop ${i}`}
+                    width={400}
+                    height={300}
                     className="w-full h-auto transition-transform duration-300 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -253,10 +247,12 @@ export default function MOSMOPSinglePage() {
               {collaborators.map((collaborator, index) => (
                 <Card key={index}>
                   <CardContent className="flex flex-col items-center pt-6">
-                    <img
+                    <Image
                       src={collaborator.image}
                       alt={collaborator.name}
-                      className="w-32 h-32 rounded-full mb-4"
+                      width={128}
+                      height={128}
+                      className="rounded-full mb-4"
                     />
                     <h3 className="text-xl font-semibold mb-2">{collaborator.name}</h3>
                     <p className="text-gray-600 mb-1">{collaborator.role}</p>
