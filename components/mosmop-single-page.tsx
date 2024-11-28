@@ -92,15 +92,15 @@ export default function MOSMOPSinglePage() {
     });
   }, []);
 
-  const scrollTo = (ref: RefObject<HTMLElement>) => {
+  const scrollTo = (ref: React.RefObject<HTMLElement>) => {
     if (ref.current) {
       ref.current.scrollIntoView({ behavior: 'smooth' })
     }
   }
 
-  const handleSlackFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const handleSlackFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget as HTMLFormElement);
+    const formData = new FormData(event.currentTarget);
     const data = Object.fromEntries(formData.entries());
     
     try {
@@ -126,22 +126,22 @@ export default function MOSMOPSinglePage() {
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-blue-50">
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md shadow-sm">
-        <nav className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <Link href="/" className="text-2xl font-bold text-green-700">MOSMOP</Link>
-          <div className="space-x-4">
-            <button onClick={() => scrollTo(overviewRef)} className={`text-gray-600 hover:text-green-700 ${activeSection === 'overview' ? 'text-green-700' : ''}`}>Overview</button>
-            <button onClick={() => scrollTo(workshopsRef)} className={`text-gray-600 hover:text-green-700 ${activeSection === 'workshops' ? 'text-green-700' : ''}`}>Workshops</button>
-            <button onClick={() => scrollTo(collaboratorsRef)} className={`text-gray-600 hover:text-green-700 ${activeSection === 'collaborators' ? 'text-green-700' : ''}`}>Collaborators</button>
-            <button onClick={() => scrollTo(articlesRef)} className={`text-gray-600 hover:text-green-700 ${activeSection === 'articles' ? 'text-green-700' : ''}`}>Articles</button>
-            <button onClick={() => scrollTo(mapRef)} className={`text-gray-600 hover:text-green-700 ${activeSection === 'map' ? 'text-green-700' : ''}`}>Global Impact</button>
-            <button onClick={() => scrollTo(communityRef)} className={`text-gray-600 hover:text-green-700 ${activeSection === 'community' ? 'text-green-700' : ''}`}>Community</button>
+        <nav className="container mx-auto px-4 py-2 flex justify-between items-center">
+          <Link href="/" className="text-xl font-bold text-green-700">MOSMOP</Link>
+          <div className="hidden md:flex space-x-4">
+            <button onClick={() => scrollTo(overviewRef)} className={`text-sm text-gray-600 hover:text-green-700 ${activeSection === 'overview' ? 'text-green-700' : ''}`}>Overview</button>
+            <button onClick={() => scrollTo(workshopsRef)} className={`text-sm text-gray-600 hover:text-green-700 ${activeSection === 'workshops' ? 'text-green-700' : ''}`}>Workshops</button>
+            <button onClick={() => scrollTo(collaboratorsRef)} className={`text-sm text-gray-600 hover:text-green-700 ${activeSection === 'collaborators' ? 'text-green-700' : ''}`}>Collaborators</button>
+            <button onClick={() => scrollTo(articlesRef)} className={`text-sm text-gray-600 hover:text-green-700 ${activeSection === 'articles' ? 'text-green-700' : ''}`}>Articles</button>
+            <button onClick={() => scrollTo(mapRef)} className={`text-sm text-gray-600 hover:text-green-700 ${activeSection === 'map' ? 'text-green-700' : ''}`}>Global Impact</button>
+            <button onClick={() => scrollTo(communityRef)} className={`text-sm text-gray-600 hover:text-green-700 ${activeSection === 'community' ? 'text-green-700' : ''}`}>Community</button>
           </div>
         </nav>
       </header>
 
-      <main className="pt-20">
+      <main className="pt-16">
         {/* Hero Section */}
-        <section id="hero" ref={heroRef} className="relative h-[calc(100vh-5rem)] flex items-center justify-center overflow-hidden">
+        <section id="hero" ref={heroRef} className="relative h-[calc(100vh-4rem)] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0 z-0">
             <Image
               src="/images/hero-image.jpg"
@@ -155,14 +155,14 @@ export default function MOSMOPSinglePage() {
             className="container mx-auto px-4 text-center text-white z-10"
             style={{ opacity, y }}
           >
-            <h1 className="text-4xl md:text-6xl font-bold mb-4">
+            <h1 className="text-3xl md:text-5xl font-bold mb-4">
               Future Leader&apos;s Adoption of ESG-Driven Business Models
             </h1>
-            <p className="text-xl md:text-2xl mb-8">
+            <p className="text-lg md:text-xl mb-8">
               MOre Sustainable, MOre Profitable (MOSMOP)
             </p>
             <Button size="lg" className="bg-green-600 hover:bg-green-700 text-white" onClick={() => scrollTo(overviewRef)}>
-              Learn More <ArrowRight className="ml-2" />
+              Learn More <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </motion.div>
         </section>
@@ -170,12 +170,12 @@ export default function MOSMOPSinglePage() {
         {/* Overview Section */}
         <section id="overview" ref={overviewRef} className="py-16 bg-white">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center mb-8">Project Overview</h2>
+            <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">Project Overview</h2>
             <div className="grid md:grid-cols-3 gap-8">
               <div className="text-center">
-                <Globe className="w-16 h-16 mx-auto mb-4 text-green-600" />
-                <h3 className="text-xl font-semibold mb-2">Global Collaboration</h3>
-                <p className="text-gray-600">
+                <Globe className="w-12 h-12 mx-auto mb-4 text-green-600" />
+                <h3 className="text-lg font-semibold mb-2">Global Collaboration</h3>
+                <p className="text-sm text-gray-600">
                   Uniting UK universities and global companies in sustainable business practices.
                 </p>
               </div>
@@ -188,14 +188,14 @@ export default function MOSMOPSinglePage() {
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className="w-16 h-16 mx-auto mb-4 text-green-600"
+                  className="w-12 h-12 mx-auto mb-4 text-green-600"
                 >
                   <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
                   <path d="M14.5 9.5 9 15" />
                   <path d="m9 9 5.5 5.5" />
                 </svg>
-                <h3 className="text-xl font-semibold mb-2">ESG Focus</h3>
-                <p className="text-gray-600">
+                <h3 className="text-lg font-semibold mb-2">ESG Focus</h3>
+                <p className="text-sm text-gray-600">
                   Integrating Environmental, Social, and Governance principles into business models.
                 </p>
               </div>
@@ -208,12 +208,12 @@ export default function MOSMOPSinglePage() {
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className="w-16 h-16 mx-auto mb-4 text-green-600"
+                  className="w-12 h-12 mx-auto mb-4 text-green-600"
                 >
                   <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
                 </svg>
-                <h3 className="text-xl font-semibold mb-2">Sustainable Profitability</h3>
-                <p className="text-gray-600">
+                <h3 className="text-lg font-semibold mb-2">Sustainable Profitability</h3>
+                <p className="text-sm text-gray-600">
                   Demonstrating that sustainability and profitability can go hand in hand.
                 </p>
               </div>
@@ -224,7 +224,7 @@ export default function MOSMOPSinglePage() {
         {/* Workshops Section */}
         <section id="workshops" ref={workshopsRef} className="py-16 bg-green-50">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center mb-8">Workshop Galleries</h2>
+            <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">Workshop Galleries</h2>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               {[1, 2, 3, 4, 5, 6].map((i) => (
                 <div key={i} className="relative group overflow-hidden rounded-lg">
@@ -247,7 +247,7 @@ export default function MOSMOPSinglePage() {
         {/* Collaborators Section */}
         <section id="collaborators" ref={collaboratorsRef} className="py-16 bg-green-50">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center mb-8">Our Collaborators</h2>
+            <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">Our Collaborators</h2>
             <div className="grid md:grid-cols-4 gap-8 mb-12">
               {collaborators.map((collaborator, index) => (
                 <Card key={index}>
@@ -255,13 +255,13 @@ export default function MOSMOPSinglePage() {
                     <Image
                       src={collaborator.image}
                       alt={collaborator.name}
-                      width={128}
-                      height={128}
+                      width={96}
+                      height={96}
                       className="rounded-full mb-4"
                     />
-                    <h3 className="text-xl font-semibold mb-2">{collaborator.name}</h3>
-                    <p className="text-gray-600 mb-1">{collaborator.role}</p>
-                    <p className="text-gray-500">{collaborator.institution}</p>
+                    <h3 className="text-lg font-semibold mb-2">{collaborator.name}</h3>
+                    <p className="text-sm text-gray-600 mb-1">{collaborator.role}</p>
+                    <p className="text-xs text-gray-500 text-center">{collaborator.institution}</p>
                   </CardContent>
                 </Card>
               ))}
@@ -273,17 +273,17 @@ export default function MOSMOPSinglePage() {
         {/* Articles Section */}
         <section id="articles" ref={articlesRef} className="py-16 bg-white">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center mb-8">Articles and Whitepapers</h2>
+            <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">Articles and Whitepapers</h2>
             <div className="grid md:grid-cols-2 gap-8">
               <Card>
                 <CardHeader>
-                  <CardTitle>ESG White Paper on the Pharmaceutical Manufacturing Industry</CardTitle>
+                  <CardTitle className="text-lg">ESG White Paper on the Pharmaceutical Manufacturing Industry</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-600 mb-4">
+                  <p className="text-sm text-gray-600 mb-4">
                     Explore our latest research on ESG practices in the pharmaceutical manufacturing industry.
                   </p>
-                  <Button variant="outline" className="w-full" onClick={() => window.open("http://rongxuesg.com/archives/757", "_blank")}>
+                  <Button variant="outline" className="w-full text-sm" onClick={() => window.open("http://rongxuesg.com/archives/757", "_blank")}>
                     <Book className="mr-2 h-4 w-4" />
                     Read Whitepaper
                   </Button>
@@ -291,13 +291,13 @@ export default function MOSMOPSinglePage() {
               </Card>
               <Card>
                 <CardHeader>
-                  <CardTitle>ESG White Paper on the New Energy Industry</CardTitle>
+                  <CardTitle className="text-lg">ESG White Paper on the New Energy Industry</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-600 mb-4">
+                  <p className="text-sm text-gray-600 mb-4">
                     Discover insights on ESG integration in the new energy sector.
                   </p>
-                  <Button variant="outline" className="w-full" onClick={() => window.open("http://rongxuesg.com/archives/782", "_blank")}>
+                  <Button variant="outline" className="w-full text-sm" onClick={() => window.open("http://rongxuesg.com/archives/782", "_blank")}>
                     <Book className="mr-2 h-4 w-4" />
                     Read Whitepaper
                   </Button>
@@ -310,8 +310,8 @@ export default function MOSMOPSinglePage() {
         {/* Map Section */}
         <section id="map" ref={mapRef} className="py-16 bg-white">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center mb-8">Global Impact</h2>
-            <div className="h-[600px] w-full">
+            <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">Global Impact</h2>
+            <div className="h-[400px] md:h-[600px] w-full">
               <DynamicMap />
             </div>
           </div>
@@ -320,14 +320,14 @@ export default function MOSMOPSinglePage() {
         {/* Community Section */}
         <section id="community" ref={communityRef} className="py-16 bg-white">
           <div className="container mx-auto px-4 text-center">
-            <h2 className="text-3xl font-bold mb-8">Join Our Community</h2>
-            <p className="text-xl mb-8">
+            <h2 className="text-2xl md:text-3xl font-bold mb-8">Join Our Community</h2>
+            <p className="text-sm md:text-base mb-8">
               Connect with like-minded professionals and stay updated on the latest in ESG-driven business models.
             </p>
             <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
               <DialogTrigger asChild>
                 <Button size="lg" className="bg-green-600 hover:bg-green-700 text-white">
-                  Join Slack <Slack className="ml-2" />
+                  Join Slack <Slack className="ml-2 h-4 w-4" />
                 </Button>
               </DialogTrigger>
               <DialogContent>
@@ -364,7 +364,7 @@ export default function MOSMOPSinglePage() {
           <div className="grid md:grid-cols-4 gap-8">
             <div>
               <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
-              <ul className="space-y-2">
+              <ul className="space-y-2 text-sm">
                 <li><button onClick={() => scrollTo(overviewRef)} className="hover:text-green-400">Overview</button></li>
                 <li><button onClick={() => scrollTo(workshopsRef)} className="hover:text-green-400">Workshops</button></li>
                 <li><button onClick={() => scrollTo(collaboratorsRef)} className="hover:text-green-400">Collaborators</button></li>
@@ -375,8 +375,8 @@ export default function MOSMOPSinglePage() {
             </div>
             <div>
               <h3 className="text-lg font-semibold mb-4">Contact</h3>
-              <p>Email: cbit@ntu.ac.uk</p>
-              <p>Phone: +44 123 456 7890</p>
+              <p className="text-sm">Email: cbit@ntu.ac.uk</p>
+              <p className="text-sm">Phone: +44 123 456 7890</p>
             </div>
             <div>
               <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
@@ -401,22 +401,22 @@ export default function MOSMOPSinglePage() {
             <div>
               <h3 className="text-lg font-semibold mb-4">Newsletter</h3>
               <form className="flex">
-                <input
+                <Input
                   type="email"
                   placeholder="Your email"
                   className="flex-grow px-3 py-2 bg-gray-700 text-white rounded-l-md focus:outline-none focus:ring-2 focus:ring-green-400"
                 />
-                <button
+                <Button
                   type="submit"
                   className="px-4 py-2 bg-green-600 text-white rounded-r-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400"
                 >
                   Subscribe
-                </button>
+                </Button>
               </form>
             </div>
           </div>
           <div className="mt-8 pt-8 border-t border-gray-700 text-center">
-            <p>&copy; {new Date().getFullYear()} MOSMOP. All rights reserved.</p>
+            <p className="text-sm">&copy; {new Date().getFullYear()} MOSMOP. All rights reserved.</p>
           </div>
         </div>
       </footer>
