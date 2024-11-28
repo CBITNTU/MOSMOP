@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useRef, useState, RefObject, FormEvent } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { ArrowRight, Globe, Slack, Book } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -12,7 +12,7 @@ import { RollingLogos } from '@/components/rolling-logos'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 
-const DynamicMap = dynamic(() => import('../components/DynamicMap'), {
+const DynamicMap = dynamic(() => import('./DynamicMap'), {
   ssr: false,
 })
 
