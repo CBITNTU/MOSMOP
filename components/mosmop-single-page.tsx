@@ -1,5 +1,4 @@
 "use client"
-
 import React, { useEffect, useRef, useState } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { ArrowRight, Globe, Slack, Book } from 'lucide-react'
@@ -7,32 +6,16 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import Link from 'next/link'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
-import 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import { Input } from '@/components/ui/input'
 import { Label } from "@/components/ui/label"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { RollingLogos } from '@/components/rolling-logos'
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
-import 'leaflet/dist/leaflet.css'
 import dynamic from 'next/dynamic'
 
-import type { LatLngExpression } from 'leaflet';
-declare global {
-  interface Window {
-    L: typeof import('leaflet');
-  }
-}
-const L = typeof window !== 'undefined' ? window.L : null;
-
-// Fix for default marker icon
-delete L.Icon.Default.prototype._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/images/marker-icon-2x.png',
-  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/images/marker-icon.png',
-  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/images/marker-shadow.png',
-});
-
+const DynamicMap = dynamic(() => import('../components/DynamicMap'), {
+  ssr: false,
+})
 
 const markers = [
   { name: "University of Nottingham", coordinates: [52.9388, -1.1968] },
@@ -44,8 +27,8 @@ const markers = [
 ]
 
 const collaborators = [
-  { name: "Prof. Xiao Ma", role: "PI", institution: "Centre for Business and Industrial Transformation", image: "/images/collaborators/xiaoma.png" },
-  { name: "Prof. Li Wei", role: "Co-PI", institution: "Shanghai Jiao Tong University", image: "/images/collaborators/li-wei.jpg" },
+  { name: "Prof. Xiao Ma", role: "Professor", institution: "Centre for Business and Industrial Transformation", image: "/images/collaborators/xiaoma.png" },
+  { name: "Prof. Li Wei", role: "Professor", institution: "Shanghai Jiao Tong University", image: "/images/collaborators/li-wei.jpg" },
   { name: "Dr. Fatima Gillani", role: "Senior Research Fellow", institution: "Centre for Business and Industrial Transformation", image: "/images/collaborators/fatima.jpg" },
   { name: "Dr. Sönnich Dahl Sönnichsen", role: "Associate Professor", institution: "Centre for Business and Industrial Transformation", image: "/images/collaborators/sonnich.jpg" },
 ]
@@ -104,11 +87,6 @@ export default function MOSMOPSinglePage() {
     }
   }, [])
 
-  const DynamicMap = dynamic(() => import('../components/DynamicMap'), {
-  ssr: false,
-})
-
-export default function MOSMOPSinglePage() {
   useEffect(() => {
     import('leaflet').then(L => {
       delete L.Icon.Default.prototype._getIconUrl;
@@ -120,8 +98,6 @@ export default function MOSMOPSinglePage() {
     });
   }, []);
 
-  const mapRef = React.useRef(null);
-  
   const scrollTo = (ref) => {
     ref.current.scrollIntoView({ behavior: 'smooth' })
   }
@@ -152,6 +128,7 @@ export default function MOSMOPSinglePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-blue-50">
+      {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md shadow-sm">
         <nav className="container mx-auto px-4 py-4 flex justify-between items-center">
           <Link href="/" className="text-2xl font-bold text-green-700">MOSMOP</Link>
@@ -167,6 +144,7 @@ export default function MOSMOPSinglePage() {
       </header>
 
       <main className="pt-20">
+        {/* Hero Section */}
         <section id="hero" ref={heroRef} className="relative h-[calc(100vh-5rem)] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0 z-0">
             <img
@@ -192,6 +170,7 @@ export default function MOSMOPSinglePage() {
           </motion.div>
         </section>
 
+        {/* Overview Section */}
         <section id="overview" ref={overviewRef} className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl font-bold text-center mb-8">Project Overview</h2>
@@ -245,11 +224,12 @@ export default function MOSMOPSinglePage() {
           </div>
         </section>
 
+        {/* Workshops Section */}
         <section id="workshops" ref={workshopsRef} className="py-16 bg-green-50">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl font-bold text-center mb-8">Workshop Galleries</h2>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              {[1, 2,3,4,5,6].map((i) => (
+              {[1, 2, 3, 4, 5, 6].map((i) => (
                 <div key={i} className="relative group overflow-hidden rounded-lg">
                   <img
                     src={`/images/workshops/workshop-${i}.jpg`}
@@ -265,11 +245,13 @@ export default function MOSMOPSinglePage() {
           </div>
         </section>
 
+        {/* Collaborators Section */}
         <section id="collaborators" ref={collaboratorsRef} className="py-16 bg-green-50">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl font-bold text-center mb-8">Our Collaborators</h2>
             <div className="grid md:grid-cols-4 gap-8 mb-12">
-              {collaborators.map((collaborator, index) => <Card key={index}>
+              {collaborators.map((collaborator, index) => (
+                <Card key={index}>
                   <CardContent className="flex flex-col items-center pt-6">
                     <img
                       src={collaborator.image}
@@ -281,12 +263,13 @@ export default function MOSMOPSinglePage() {
                     <p className="text-gray-500">{collaborator.institution}</p>
                   </CardContent>
                 </Card>
-              )}
+              ))}
             </div>
             <RollingLogos logos={collaboratorLogos} />
           </div>
         </section>
 
+        {/* Articles Section */}
         <section id="articles" ref={articlesRef} className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl font-bold text-center mb-8">Articles and Whitepapers</h2>
@@ -323,6 +306,7 @@ export default function MOSMOPSinglePage() {
           </div>
         </section>
 
+        {/* Map Section */}
         <section id="map" ref={mapRef} className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl font-bold text-center mb-8">Global Impact</h2>
@@ -332,6 +316,7 @@ export default function MOSMOPSinglePage() {
           </div>
         </section>
 
+        {/* Community Section */}
         <section id="community" ref={communityRef} className="py-16 bg-white">
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-3xl font-bold mb-8">Join Our Community</h2>
@@ -372,6 +357,7 @@ export default function MOSMOPSinglePage() {
         </section>
       </main>
 
+      {/* Footer */}
       <footer className="bg-gray-800 text-white py-8">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-8">
@@ -435,5 +421,8 @@ export default function MOSMOPSinglePage() {
       </footer>
     </div>
   )
+}
+
+
 }
 
