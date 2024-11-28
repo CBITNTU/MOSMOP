@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, RefObject } from 'react'
+import React, { useEffect, useRef, useState, RefObject, FormEvent } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { ArrowRight, Globe, Slack, Book } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -97,9 +97,9 @@ export default function MOSMOPSinglePage() {
     }
   }
 
-  const handleSlackFormSubmit = async (event) => {
+  const handleSlackFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const formData = new FormData(event.target);
+    const formData = new FormData(event.currentTarget as HTMLFormElement);
     const data = Object.fromEntries(formData.entries());
     
     try {
