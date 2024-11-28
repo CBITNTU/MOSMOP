@@ -1,3 +1,4 @@
+"use client"
 import React, { useEffect, useRef, useState, RefObject, FormEvent } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { ArrowRight, Globe, Slack, Book } from 'lucide-react'
