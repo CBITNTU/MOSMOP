@@ -7,15 +7,21 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import Link from 'next/link'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
-import L from 'leaflet'
-import 'leaflet/dist/leaflet.css'
 import 'leaflet'
+import 'leaflet/dist/leaflet.css'
 import { Input } from '@/components/ui/input'
 import { Label } from "@/components/ui/label"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { RollingLogos } from '@/components/rolling-logos'
 
-declare const L: any;
+import type { LatLngExpression } from 'leaflet';
+declare global {
+  interface Window {
+    L: typeof import('leaflet');
+  }
+}
+const L = typeof window !== 'undefined' ? window.L : null;
+
 // Fix for default marker icon
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
